@@ -1,0 +1,5 @@
+.feedback_selected_alt {
+    opacity:1;
+    filter:alpha(opacity=100) !important; /* For IE8 and earlier */
+    z-index:20;
+}

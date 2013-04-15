@@ -1,0 +1,225 @@
+.feedback_window 
+{
+    position:fixed;
+    bottom:5px;
+    right:5px;
+    width:200px;
+    text-align:right;
+    color:#000;
+    z-index: 999;
+    font-size: 10pt;
+}
+
+.feedback_extra
+{
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3); 
+	background-color: #ffffff;
+  border-radius: 6px;
+  text-align:left;
+}
+.feedback_top
+{
+  padding-left:6px;
+  padding-right:6px;
+  padding-top:6px;
+  text-align:center;
+
+}
+.feedback_actions
+{
+	margin-top:5px;
+}
+
+.feedback_extra textarea
+{
+	margin-top:5px;
+  width:auto;
+}
+.feedback_actions
+{
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3); 
+	border-top: 1px solid #ddd;
+	background-color:#f5f5f5;
+	padding:5px;
+	border-radius: 0 0 6px 6px;
+}
+
+.feedback_actions button {
+  width:88px;
+  margin:.25em;
+}
+
+
+.feedback_hover {
+    outline: 5px solid #fffc73 !important;
+    z-index:500;
+}
+
+.feedback_selected {
+    outline: 5px solid red !important;
+    z-index:500;
+}
+
+
+.feedback_unselected {
+
+}
+
+.feedback-btn {
+    display: inline-block;
+    padding: 4px 10px 4px;
+    margin-bottom: 0;
+    font-size: 13px;
+    line-height: 18px;
+    color: #333333;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+    vertical-align: middle;
+    background-color: #f5f5f5;
+    background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+    background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: linear-gradient(top, #ffffff, #e6e6e6);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
+    border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    border: 1px solid #ccc;
+    border-bottom-color: #bbb;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    *margin-left: .3em;
+}
+.feedback-btn:hover,
+.feedback-btn:active,
+.feedback-btn.active,
+.feedback-btn.disabled,
+.feedback-btn[disabled] {
+    background-color: #e6e6e6;
+}
+.feedback-btn:active, .feedback-btn.active {
+    background-color: #cccccc \9;
+}
+.feedback-btn:first-child {
+    *margin-left: 0;
+}
+.feedback-btn:hover {
+    color: #333333;
+    text-decoration: none;
+    background-color: #e6e6e6;
+    background-position: 0 -15px;
+    -webkit-transition: background-position 0.1s linear;
+    -moz-transition: background-position 0.1s linear;
+    -ms-transition: background-position 0.1s linear;
+    -o-transition: background-position 0.1s linear;
+    transition: background-position 0.1s linear;
+}
+.feedback-btn:focus {
+    outline: thin dotted #333;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+.feedback-btn.active, .feedback-btn:active {
+    background-image: none;
+    -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+    background-color: #e6e6e6;
+    background-color: #d9d9d9 \9;
+    outline: 0;
+}
+.feedback-btn.disabled, .feedback-btn[disabled] {
+    cursor: default;
+    background-image: none;
+    background-color: #e6e6e6;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.feedback-btn-small {
+    padding: 5px 9px;
+    font-size: 11px;
+    line-height: 16px;
+}
+.feedback-btn-small [class^="icon-"] {
+    margin-top: -1px;
+}
+
+
+.feedback-btn-inverse,
+.feedback-btn-inverse:hover {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    color: #ffffff;
+}
+
+.feedback-btn-inverse {
+    background-color: #393939;
+    background-image: -moz-linear-gradient(top, #454545, #262626);
+    background-image: -ms-linear-gradient(top, #454545, #262626);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#454545), to(#262626));
+    background-image: -webkit-linear-gradient(top, #454545, #262626);
+    background-image: -o-linear-gradient(top, #454545, #262626);
+    background-image: linear-gradient(top, #454545, #262626);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#454545', endColorstr='#262626', GradientType=0);
+    border-color: #262626 #262626 #000000;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+.feedback-btn-inverse:hover,
+.feedback-btn-inverse:active,
+.feedback-btn-inverse.active,
+.feedback-btn-inverse.disabled,
+.feedback-btn-inverse[disabled] {
+    background-color: #262626;
+}
+.feedback-btn-inverse:active, .feedback-btn-inverse.active {
+    background-color: #0c0c0c \9;
+}
+button.feedback-btn, input[type="submit"].feedback-btn {
+    *padding-top: 2px;
+    *padding-bottom: 2px;
+}
+button.feedback-btn::-moz-focus-inner, input[type="submit"].feedback-btn::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+button.feedback-btn.large, input[type="submit"].feedback-btn.large {
+    *padding-top: 7px;
+    *padding-bottom: 7px;
+}
+button.feedback-btn.small, input[type="submit"].feedback-btn.small {
+    *padding-top: 3px;
+    *padding-bottom: 3px;
+}
+
+.feedback-btn .caret {
+    margin-top: 7px;
+    margin-left: 0;
+}
+.feedback-btn:hover .caret, .open.btn-group .caret {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+.feedback-btn-inverse .caret {
+    border-top-color: #ffffff;
+    opacity: 0.75;
+    filter: alpha(opacity=75);
+}
+.feedback-btn-small .caret {
+    margin-top: 4px;
+}
+
