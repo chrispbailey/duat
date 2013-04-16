@@ -1,9 +1,6 @@
 import os
 import re
 import tempfile
-import urllib2
-import base64
-import urlparse;
 import json
 import logging
 
@@ -40,6 +37,8 @@ def post(request, project_name):
 		# process html contents...
 		
 		# remove all scripts
+		# NB - We are not attempting to comprehensively block XSS, 
+		# rather simply disable any javascript from loading
 		html = re.sub('<script(.*?)<\/script>','',html, 
 					  flags=(re.IGNORECASE | re.DOTALL))
 		
@@ -64,11 +63,22 @@ def post(request, project_name):
 		
 		generate_screenshot(feedback)
 		
-		if project.admin_email:
-			url = reverse('admin:%s_%s_change' %(feedback._meta.app_label,  feedback._meta.module_name),  args=[feedback.id] )
-			send_mail('Feedback recieved',
-					  'You can view this item here\n', 
-					  'webmaster@duat', [project.admin_email], fail_silently=False)
+		if project.notify_admin and project.admin.email:
+			try:
+				url = reverse('admin:%s_%s_change' % (feedback._meta.app_label,
+													  feedback._meta.module_name),
+							  args=[feedback.id])
+				if request.is_secure():
+					url = 'https://' + request.META.get('HTTP_HOST') + url
+				else:
+					url = 'http://' + request.META.get('HTTP_HOST') + url
+				send_mail('DUAT: feedback recieved',
+						  'You can view this item here:\n%s' % url, 
+						  'webmaster@%s ' % settings.HOSTNAME, 
+						  [project.admin.email],
+						  fail_silently=False)
+			except:
+				logger.warn("Unable to notify admin")
 
 		return HttpResponse("Thanks")
 	else:
@@ -91,7 +101,9 @@ def view(request, project_name, id):
 	return HttpResponse(html)
 	
 def generate_screenshot(feedback):
-	PHANTOMJS_EXECUTABLE = getattr(settings, 'PHANTOMJS_EXECUTABLE', 'phantomjs')
+	""" Pass the html onto PhantomJS to convert into an image """
+	PHANTOMJS_EXECUTABLE = getattr(settings, 'PHANTOMJS_EXECUTABLE', 
+								   'phantomjs')
 	output_dir = os.path.join(settings.STATIC_ROOT, 'screenshots')
 	output_file = "%s/%s.jpg" % (output_dir, feedback.id) 
 
@@ -110,20 +122,19 @@ def generate_screenshot(feedback):
 	# create the process
 	p = call(args)
 	
-def generate_js(request, project_name, filename):
-	project = Project.objects.get(name=project_name)
+def generate_js(request, filename, project_name=None):
+	""" 
+	Returns a javascript file generated using django's templating mechanism
+	"""
+	project = path = None
+	if project_name:
+		project = Project.objects.get(name=project_name)
+		path = reverse('post', kwargs={'project_name':project.name})
 	context = RequestContext(request)
-	path = reverse('post', kwargs={'project_name':project.name})
+	host = request.META.get('HTTP_HOST')
 	return HttpResponse(render_to_response(filename,
 										   {'project':project,
-											'host' : request.META.get('HTTP_HOST'),
+											'host' : host,
 											'path': path},
-										   context_instance=context),
-						mimetype = 'application/javascript')
-
-def processed_js(request, filename):
-	context = RequestContext(request)
-	return HttpResponse(render_to_response(filename,
-										   {'host' : request.META.get('HTTP_HOST')},
 										   context_instance=context),
 						mimetype = 'application/javascript')

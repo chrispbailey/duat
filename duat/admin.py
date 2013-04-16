@@ -32,7 +32,12 @@ class FeedbackAdmin(admin.ModelAdmin):
     def screenshot(self, obj):
         url_image = settings.STATIC_URL + 'screenshots/' + str(obj.id) + '.jpg'
         url_rendered = reverse('view',kwargs={'project_name':obj.project.name,'id':obj.id})
-        return ('<a href="%s" target="_new" style="height:200px;width:200px;background-image:url(%s);display:block; background-size: 200px auto;">&nbsp;</a><a href="%s">Image</a> | <a href="%s">Page</a>' % 
+        return ('<a href="%s" style="height:200px;width:200px;'
+                'background-image:url(%s);'
+                'background-repeat:no-repeat;'
+                'display:block;'
+                'background-size: 200px auto;">&nbsp;</a>'
+                'View: <a href="%s">Image</a> | <a href="%s">Page</a>' % 
                 (url_image, url_image, url_image, url_rendered))
     screenshot.allow_tags = True
 
@@ -41,7 +46,7 @@ class FeedbackAdmin(admin.ModelAdmin):
 
 
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('project_name','admin_email','jslink')
+    list_display = ('project_name','admin','jslink')
     readonly_fields = ('jslink',)
     
     def project_name(self, project):

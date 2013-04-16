@@ -5,7 +5,7 @@ from django.contrib.sites.models import Site
 from django.contrib.auth.models import Group
 from django.contrib import admin
 
-from duat.views import post,view,generate_js,processed_js
+from duat.views import post,view,generate_js
 
 admin.autodiscover()
 admin.site.unregister(Site)
@@ -22,9 +22,10 @@ urlpatterns = patterns('',
         kwargs={'filename':'feedback.js'}),
 
     url(r'^js/admin\.js$', 
-        cache_page(60*24)(processed_js),
+        cache_page(60*24)(generate_js),
         name='admin',
-        kwargs={'filename':'admin.js'}),
+        kwargs={'filename':'admin.js',
+                'project_name':None}),
 
     url(r'^project/(?P<project_name>\w+)/submit$', post, name='post'),
     

@@ -1,7 +1,7 @@
-# Duat - Django UAT Feedback tool
+# Duat - A lightweight django UAT feedback tool
 
-This is a simple django application for embeddding a lightweight feedback mechanism into you website(s). 
-It's intended primarily as an aid for user acceptance testing, much like [Google Feedback](http://www.google.com/tools/feedback/intl/en/learnmore.html)
+This is a simple django application for embedding a lightweight feedback mechanism into you websites. 
+It's intended primarily as an aid for user acceptance testing, much like [Google Feedback](http://www.google.com/tools/feedback/intl/en/learnmore.html). The backend leverages Django's admin module to provide its functionality.
 
 ## How to use it
 
@@ -29,7 +29,7 @@ This DOM is then sent to the server where PhantomJS is used to generate a static
     python manage.py runserver 8000
 
 6. Now visit the admin page (e.g. http://localhost:8000/admin), log in using the admin details and start creating projects.
-Each project will have an accompanying javascript url (e.g. http://localhost:8000/project/[project_name]/feedbac.js) which you can embed into your website use to start generating feedback!
+Each project will have an accompanying javascript url (e.g. http://localhost:8000/project/[project_name]/feedback.js) which you can embed into your website use to start generating feedback!
  
 ## Notes
 

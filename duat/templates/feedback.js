@@ -6,7 +6,7 @@
     
     window.Feedback.init = function(){
         // load css
-        var filename = 'http://{{host}}{{STATIC_URL}}css/feedback.css';
+        var filename = '//{{host}}{{STATIC_URL}}css/feedback.css';
         var fileref = document.createElement("link");
         fileref.setAttribute("rel", "stylesheet");
         fileref.setAttribute("type", "text/css");
@@ -17,8 +17,8 @@
         "<button class='feedback-btn feedback_start' onclick='window.Feedback.show_form()'>Send Feedback</button>"+
         "<div class='feedback_extra' style='display:none;'>"+
             "<div class='feedback_top'>"+
-                "<div class='feedback_sending'><p>Sending...</p><img src='http://{{host}}{{STATIC_URL}}/images/ajax-loader.gif'/></div>"+
-                "<div class='feedback_success'><p>Submission send successfully!</p></div>"+
+                "<div class='feedback_sending'><p>Sending...</p><img src='//{{host}}{{STATIC_URL}}/images/ajax-loader.gif'/></div>"+
+                "<div class='feedback_success'><p>Submission sent successfully!</p></div>"+
                 "<div class='feedback_failure'><p>Submission failed!</p></div>"+
                 "<div class='feedback_form'>"+
                     "<p>Please describe the issue you are experiencing:</p>"+
@@ -85,7 +85,7 @@
 
     window.Feedback.submit = function(){
         // send
-        var url = 'http://{{host}}/project/bos2/submit';
+        var url = '//{{host}}/project/bos2/submit';
         var data = {};
         // add extra useful information
         data['url'] = window.location.href;
