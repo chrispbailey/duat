@@ -187,7 +187,7 @@
                 // Super failsafe - still somehow failed...
             } else {
                 // jQuery loaded! Make sure to use .noConflict just in case
-                jQuery(document).ready(window.Feedback.init());
+                jQuery(document).ready(window.Feedback.init);
                 jQuery.noConflict();
             }
         });
