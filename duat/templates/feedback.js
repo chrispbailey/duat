@@ -28,7 +28,7 @@
             "</div>"+
             "<div class='feedback_actions'>"+
                 "<button class='feedback-btn feedback_send' onclick='window.Feedback.submit()'>Send</button>"+
-                "<button class='feedback-btn' onclick='window.Feedback.reset()'>Cancel</button>"+
+                "<button class='feedback-btn feedback_cancel' onclick='window.Feedback.reset()'>Cancel</button>"+
             "</div>"+
         "</div>"+
         "</div>";
