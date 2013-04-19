@@ -2,7 +2,7 @@
 
     window.Feedback = {}
 
-    window.Feedback.enabled = false;
+    window.Feedback.selection_enabled = false;
     
     window.Feedback.init = function(){
         // load css
@@ -50,28 +50,31 @@
     window.Feedback.lastelem = null;
 
     window.Feedback.enable_selection = function(){
-        window.Feedback.enabled = true;
+        window.Feedback.selection_enabled = true;
         
         jQuery("body *:not(.feedback_ignore)").addClass("feedback_unselected");
         
         document.onmouseover = function(e) {
-            var event = e || window.event;
+            if (window.Feedback.selection_enabled === true) {
+                var event = e || window.event;
 
-            if (window.Feedback.lastelem) {
-                jQuery("*", window.Feedback.lastelem).removeClass("feedback_hover");
-                jQuery(window.Feedback.lastelem).removeClass("feedback_hover");
-            }
+                if (window.Feedback.lastelem) {
+                    jQuery("*", window.Feedback.lastelem).removeClass("feedback_hover");
+                    jQuery(window.Feedback.lastelem).removeClass("feedback_hover");
+                }
 
-            var target = event.target || event.srcElement;
+                var target = event.target || event.srcElement;
             
-            if (target != document.body && !jQuery(target).hasClass('feedback_ignore')) {
-                jQuery(target).addClass("feedback_hover");
+                if (target != document.body && !jQuery(target).hasClass('feedback_ignore')) {
+                    jQuery(target).addClass("feedback_hover");
+                }
+                window.Feedback.lastelem = target;
             }
-            window.Feedback.lastelem = target;
         };
         
         document.onclick = function(event) {
-            if (window.Feedback.enabled) {
+            if (window.Feedback.selection_enabled === true) {
+            	console.log(window.Feedback.selection_enabled);
                 var target = event.target || event.srcElement;
                 if (!jQuery(target).hasClass('feedback_ignore')) {
                     jQuery(target).toggleClass("feedback_selected");
@@ -104,7 +107,7 @@
 
     window.Feedback.reset = function(){
         // reset page
-        window.Feedback.enabled = false;
+        window.Feedback.selection_enabled = false;
         jQuery('.feedback_window .feedback_start').fadeIn();
         jQuery('.feedback_form textarea').val("");
         jQuery('.feedback_window .feedback_extra').slideUp();
@@ -115,10 +118,13 @@
     };
 
     window.Feedback.show_loading = function() {
+        window.Feedback.selection_enabled = false;
+        jQuery('.feedback_send').attr('disabled','disabled');
         jQuery('.feedback_failure').hide();
         jQuery('.feedback_success').hide();
         jQuery('.feedback_form').slideUp('fast');
         jQuery('.feedback_sending').slideDown('fast');
+        
     }
     
     window.Feedback.success = function()
