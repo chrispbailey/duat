@@ -44,7 +44,9 @@ class Feedback(models.Model):
     
     class Meta:
         ordering = ('-created_date',)
-
+        permissions = (
+            ('readonly_feedback','Readonly Feedback'),
+        )
 
 @receiver(pre_delete, sender=Feedback)
 def _feedback_delete(sender, instance, **kwargs):
