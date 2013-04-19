@@ -21,7 +21,8 @@
                 "<div class='feedback_success'><p>Submission sent successfully!</p></div>"+
                 "<div class='feedback_failure'><p>Submission failed!</p></div>"+
                 "<div class='feedback_form'>"+
-                    "<p>Please describe the issue you are experiencing:</p>"+
+                    "<p>Please describe the issue you are experiencing.<br/>"+
+                    "You can highlight areas of the page by selecting them with your mouse.</p>"+
                     "<textarea name='comment'></textarea>"+
                 "</div>"+
             "</div>"+
@@ -74,7 +75,6 @@
         
         document.onclick = function(event) {
             if (window.Feedback.selection_enabled === true) {
-            	console.log(window.Feedback.selection_enabled);
                 var target = event.target || event.srcElement;
                 if (!jQuery(target).hasClass('feedback_ignore')) {
                     jQuery(target).toggleClass("feedback_selected");
