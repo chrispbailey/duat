@@ -89,8 +89,10 @@ class FeedbackAdmin(admin.ModelAdmin):
         return super(FeedbackAdmin, self).changelist_view(request, extra_context)
     
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('project_name','admin','jslink')
+    list_display = ('project_name','admin')
     readonly_fields = ('jslink',)
+    
+    host = None
     
     def project_name(self, project):
         return project.name
@@ -100,9 +102,19 @@ class ProjectAdmin(admin.ModelAdmin):
         Provide a link to the embeddable javascript file
         """
         url = reverse('js',kwargs={'project_name':project.name})
-        return '<a href="%s">%s</a>' % (url,url)
-    jslink.allow_tags = True
-    jslink.short_description = 'Javascript link'
+        return '<script src="%s%s"></script>' % (ProjectAdmin.host, url)
+    jslink.short_description = 'Embed link'
     
+    def get_readonly_fields(self, request, obj=None):
+        if not ProjectAdmin.host:
+            # set the class-level host here was we have a request object
+            if request.is_secure():
+                ProjectAdmin.host = 'https://' + request.get_host()
+            else:
+                ProjectAdmin.host = 'http://' + request.get_host()
+        if obj: # Editing
+            return self.readonly_fields
+        return ()
+
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Feedback, FeedbackAdmin)
