@@ -102,8 +102,12 @@ def view(request, project_name, id):
     
 def generate_screenshot(feedback):
     """ Pass the html onto PhantomJS to convert into an image """
-    PHANTOMJS_EXECUTABLE = getattr(settings, 'PHANTOMJS_EXECUTABLE', 
-                                   'phantomjs')
+    PHANTOMJS_EXECUTABLE = getattr(settings, 'PHANTOMJS_EXECUTABLE', '')
+    
+    if not PHANTOMJS_EXECUTABLE:
+        logger.warn('PHANTOMJS_EXECUTABLE not set - skipping screenshot generation')
+        return
+    
     output_dir = os.path.join(settings.STATIC_ROOT, 'screenshots')
     output_file = "%s/%s.jpg" % (output_dir, feedback.id) 
 

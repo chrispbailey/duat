@@ -38,15 +38,21 @@ class FeedbackAdmin(admin.ModelAdmin):
         """
         Renders a clickable screenshot with links to the full image or html view
         """
-        url_image = settings.STATIC_URL + 'screenshots/' + str(obj.id) + '.jpg'
-        url_rendered = reverse('view',kwargs={'project_name':obj.project.name,'id':obj.id})
-        return ('<a href="%s" style="height:200px;width:200px;'
-                'background-image:url(%s);'
-                'background-repeat:no-repeat;'
-                'display:block;'
-                'background-size: 200px auto;">&nbsp;</a>'
-                'View: <a href="%s">Image</a> | <a href="%s">Page</a>' % 
-                (url_image, url_image, url_image, url_rendered))
+        page_url = reverse('view',kwargs={'project_name':obj.project.name,'id':obj.id})
+
+        PHANTOMJS_EXECUTABLE = getattr(settings, 'PHANTOMJS_EXECUTABLE', '')
+        if PHANTOMJS_EXECUTABLE:
+            url_image = settings.STATIC_URL + 'screenshots/' + str(obj.id) + '.jpg'
+            return ('<a href="%s" style="height:200px;width:200px;'
+                    'background-image:url(%s);'
+                    'background-repeat:no-repeat;'
+                    'display:block;'
+                    'background-size: 200px auto;">&nbsp;</a>'
+                    'View: <a href="%s">Image</a> | <a href="%s">Page</a>' % 
+                    (url_image, url_image, url_image, page_url))
+        else:
+            # No PhantomJS setup
+            return ('View: <a href="%s">Page</a>' %  (page_url))
     screenshot.allow_tags = True
 
     def has_add_permission(self, request):

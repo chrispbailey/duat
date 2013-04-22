@@ -165,7 +165,7 @@ LOGGING = {
     }
 }
 
-PHANTOMJS_EXECUTABLE='[path_to_phantom_binary]'
+PHANTOMJS_EXECUTABLE=''
 
 import socket
 
