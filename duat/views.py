@@ -39,8 +39,8 @@ def post(request, project_name):
         # remove all scripts
         # NB - We are not attempting to comprehensively block XSS, 
         # rather simply disable any javascript from loading
-        html = re.sub('<script(.*?)<\/script>','',html, 
-                      flags=(re.IGNORECASE | re.DOTALL))
+        p = re.compile('<script(.*?)<\/script>', flags=(re.IGNORECASE | re.DOTALL))
+        html = p.sub('',html)
         
         pos = html.find('<head')
         pos = html.find('>',pos)+1
