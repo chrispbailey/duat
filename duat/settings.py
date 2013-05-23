@@ -179,8 +179,3 @@ try:
     HOSTNAME = socket.gethostname()
 except:
     HOSTNAME = 'localhost'
-
-try:
-    from local_settings import *
-except ImportError:
-    pass
