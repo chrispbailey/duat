@@ -176,6 +176,6 @@ PHANTOMJS_EXECUTABLE=''
 import socket
 
 try:
-    HOSTNAME = socket.gethostname()
+    HOSTNAME = socket.getfqdn()
 except:
     HOSTNAME = 'localhost'
