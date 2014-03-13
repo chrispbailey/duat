@@ -1,4 +1,7 @@
+MANIFEST
 *.log
 *.pot
 *.pyc
 local_settings.py
+dist
+duat.egg-info
