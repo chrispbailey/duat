@@ -19,18 +19,27 @@ The web tool allows the user to highlight different elements on the page (by add
 This DOM is then sent to the server where PhantomJS is used to generate a static image of the page and the 
 admin interface lets you view the full page contents.
 
-## Installation
+## Installation (Standalone)
 
 1. Install the [Django](https://www.djangoproject.com/) framework
-1. Download and extract [PhantomJS](http://phantomjs.org/)
-2. Checkout this repository.
-3. Edit settings.py 
+2. Download and extract [PhantomJS](http://phantomjs.org/)
+3. Checkout this repository.
+4. Edit `settings.py`:
  * Setup your database as necessary
- * Edit the PHANTOMJS_EXECUTABLE path
-4. Initalise the database (don't forget to setup an administrator)
-    python manage.py syncdb
-5. Run the server
-    python manage.py runserver 8000
+ * Edit the `PHANTOMJS_EXECUTABLE` path
+5. Initialise the database (don't forget to setup an administrator)
+    `python manage.py syncdb`
+6. Run the server
+    `python manage.py runserver 8000`
+
+## Installation (Shared)
+
+Duat can also be installed alongside other django apps. 
+1. Download and extract [PhantomJS](http://phantomjs.org/)
+2. Edit `settings.py`:
+ * Add `PHANTOMJS_EXECUTABLE=<path_to_phantomjs_binary>`
+ * Include duat in your `INSTALLED_APPS` list
+3. Run syncdb.
 
 ## Setup
 
@@ -57,11 +66,14 @@ Now create a Project
 If you wish to send notifications to this administrator click the 'Notify admin' checkbox.
 10. After clicking the Save button you will have set up your first project. 
 
-You can then use the javascript link provided on the project screen to embed a <script> tag onto your site. 
+You can then use the javascript link provided on the project screen to embed a <script> tag onto your site.
+If duat is being used from within your application, you can reference this script with the following:
+`<script src="{% url 'duat-feedback' project_name='bos2' %}"></script>`
+
 The project administrator can log into the admin site and will be able to view the Feedback entries submitted for their corresponding project.
 
 ## Notes
 
 Inspiration for this system originally came from [feedback.js](http://experiments.hertzen.com/jsfeedback/) but I found the canvas tainting in chrome to be a blocker for our requirements so I decided to implement a simpler system.
-Tested with Django 1.4 & 1.5
+Tested with Django 1.4, 1.5 & 1.6
 
