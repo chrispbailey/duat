@@ -95,7 +95,7 @@ def view(request, project_name, id):
     pos = html.find('>',pos)+1
 
     # add our own admin script
-    url = request.META.get('HTTP_HOST') + reverse('admin')
+    url = request.META.get('HTTP_HOST') + reverse('duat-admin')
     html = html[0:pos] + "<script src='//%s'></script>" % url + html[pos:]
 
     return HttpResponse(html)
@@ -135,7 +135,7 @@ def generate_js(request, filename, project_name=None):
     project = path = None
     if project_name:
         project = Project.objects.get(name=project_name)
-        path = reverse('post', kwargs={'project_name':project.name})
+        path = reverse('duat-post', kwargs={'project_name':project.name})
     context = RequestContext(request)
     host = request.META.get('HTTP_HOST')
     context['project'] = project

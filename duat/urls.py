@@ -16,23 +16,23 @@ DEFAULT_CACHE = 60 * 60 * 24
 
 urlpatterns = patterns('',
     # home page
-    url(r'^$',TemplateView.as_view(template_name='home.html')),
+    url(r'^$',TemplateView.as_view(template_name='duat/home.html')),
 
 	# generated javascript
     url(r'^project/(?P<project_name>[\w-]+)/feedback\.js$', 
         cache_page(DEFAULT_CACHE)(generate_js), 
         name='duat-feedback', 
-        kwargs={'filename':'feedback.js'}),
+        kwargs={'filename':'duat/feedback.js'}),
 
     url(r'^js/admin\.js$', 
         cache_page(DEFAULT_CACHE)(generate_js),
-        name='admin',
-        kwargs={'filename':'admin.js',
+        name='duat-admin',
+        kwargs={'filename':'duat/admin.js',
                 'project_name':None}),
 
-    url(r'^project/(?P<project_name>[\w-]+)/submit$', post, name='post'),
+    url(r'^project/(?P<project_name>[\w-]+)/submit$', post, name='duat-post'),
     
-    url(r'^view/(?P<project_name>[\w-]+)/(?P<id>\d+)/$', cache_page(DEFAULT_CACHE)(view), name='view'),
+    url(r'^view/(?P<project_name>[\w-]+)/(?P<id>\d+)/$', cache_page(DEFAULT_CACHE)(view)),
 
     url(r'^admin/', include(admin.site.urls)),
 )
