@@ -112,7 +112,7 @@ class ProjectAdmin(admin.ModelAdmin):
         """
         Provide a link to the embeddable javascript file
         """
-        url = reverse('js',kwargs={'project_name':project.name})
+        url = reverse('duat-feedback',kwargs={'project_name':project.name})
         return '<script src="%s%s"></script>' % (ProjectAdmin.host, url)
     jslink.short_description = 'Embed link'
 

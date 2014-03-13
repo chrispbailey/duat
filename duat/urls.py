@@ -21,7 +21,7 @@ urlpatterns = patterns('',
 	# generated javascript
     url(r'^project/(?P<project_name>[\w-]+)/feedback\.js$', 
         cache_page(DEFAULT_CACHE)(generate_js), 
-        name='js', 
+        name='duat-feedback', 
         kwargs={'filename':'feedback.js'}),
 
     url(r'^js/admin\.js$', 
