@@ -5,7 +5,6 @@ from django.core.files.base import ContentFile
 from django.conf import settings
 from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
-from django.contrib.auth.models import User
 
 try:
     # Django 1.5
@@ -18,7 +17,7 @@ except:
 class Project(models.Model):
     name = models.CharField(max_length=200,
                             unique=True)
-    admin = models.ForeignKey(User)
+    admin = models.ForeignKey(settings.AUTH_USER_MODEL)
     notify_admin = models.BooleanField(default=False)
     
     def save(self, *args, **kwargs):
