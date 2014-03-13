@@ -1,9 +1,9 @@
 (function() {
-
+    // Create a top-level Feedback object for the code to reside in
     window.Feedback = {}
 
     window.Feedback.selection_enabled = false;
-    
+
     window.Feedback.init = function(){
         // load css
         var filename = '//{{host}}{{STATIC_URL}}duat/css/feedback.css';
@@ -126,7 +126,7 @@
         jQuery('.feedback_sending').slideDown('fast');
         
     }
-    
+
     window.Feedback.success = function()
     {
         jQuery('.feedback_sending').slideUp('fast');
@@ -155,6 +155,10 @@
 
         xhr.open( "POST", url, true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        var csrf_token = window.Feedback.getCookie('{{ csrf_token_name }}');
+        if (csrf_token) {
+            xhr.setRequestHeader("X-CSRFToken", csrf_token);
+        }
         xhr.send( "data=" + encodeURIComponent( window.JSON.stringify( data ) ) );
         
     };
@@ -182,6 +186,22 @@
         head.appendChild(script);
     };
 
+    // function to obtain cookie by name
+    window.Feedback.getCookie = function(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 
     // Load jquery if missing
     // http://css-tricks.com/snippets/jquery/load-jquery-only-if-not-present/
@@ -200,6 +220,5 @@
     } else { // jQuery was already loaded
         jQuery(document).ready(window.Feedback.init);
     };
-
 
 })();

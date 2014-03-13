@@ -18,6 +18,7 @@ from duat.models import Feedback, Project
 
 logger = logging.getLogger(__name__)
 
+
 def post(request, project_name):
     """
     Store a posted feedback submission
@@ -33,18 +34,18 @@ def post(request, project_name):
         comment = j['comment']
         referrer = j['referrer']
         page = j['url']
-        
+
         # process html contents...
-        
+
         # remove all scripts
         # NB - We are not attempting to comprehensively block XSS, 
         # rather simply disable any javascript from loading
         p = re.compile('<script(.*?)<\/script>', flags=(re.IGNORECASE | re.DOTALL))
         html = p.sub('',html)
-        
+
         pos = html.find('<head')
         pos = html.find('>',pos)+1
-        
+
         # insert base tag
         if '<base' not in html and page:
             host = page[:page.find('/',10)]
@@ -58,23 +59,22 @@ def post(request, project_name):
                             referrer = referrer,
                             page = page)
         feedback.save()
-    
+
         logger.info('Saved issue %s' % feedback.id)
-        
+
         generate_screenshot(feedback)
-        
+
         if project.notify_admin and project.admin.email:
             try:
                 url = reverse('admin:%s_%s_change' % (feedback._meta.app_label,
                                                       feedback._meta.module_name),
                               args=[feedback.id])
-                if request.is_secure():
-                    url = 'https://' + request.META.get('HTTP_HOST') + url
-                else:
-                    url = 'http://' + request.META.get('HTTP_HOST') + url
-                send_mail('DUAT: feedback recieved',
+                url = 'http%s://%s%s' % (('s' if request.is_secure() else ''),
+                                         request.META.get('HTTP_HOST'),
+                                         url)
+                send_mail('DUAT: feedback received',
                           'You can view this item here:\n%s' % url, 
-                          'webmaster@%s ' % settings.HOSTNAME, 
+                          'web-master@%s ' % settings.HOSTNAME, 
                           [project.admin.email],
                           fail_silently=False)
             except:
@@ -84,30 +84,31 @@ def post(request, project_name):
     else:
         logger.error('Not saved - missing data')
         return HttpResponseServerError('Something went wrong')
-    
-    
+
+
 def view(request, project_name, id):
     project = Project.objects.get(name=project_name)
     feedback = Feedback.objects.get(pk=id, project=project)
-    
+
     html = feedback.html
     pos = html.find('<head')
     pos = html.find('>',pos)+1
-    
+
     # add our own admin script
     url = request.META.get('HTTP_HOST') + reverse('admin')
     html = html[0:pos] + "<script src='//%s'></script>" % url + html[pos:]
 
     return HttpResponse(html)
-    
+
+
 def generate_screenshot(feedback):
     """ Pass the html onto PhantomJS to convert into an image """
     PHANTOMJS_EXECUTABLE = getattr(settings, 'PHANTOMJS_EXECUTABLE', '')
-    
+
     if not PHANTOMJS_EXECUTABLE:
         logger.warn('PHANTOMJS_EXECUTABLE not set - skipping screenshot generation')
         return
-    
+
     output_dir = os.path.join(settings.STATIC_ROOT, 'duat', 'screenshots')
     output_file = "%s/%s.jpg" % (output_dir, feedback.id) 
 
@@ -122,10 +123,11 @@ def generate_screenshot(feedback):
             os.path.dirname(__file__)+"/renderhtml.js",
             input_file.name,
             output_file]
-    
+
     # create the process
     p = call(args)
-    
+
+
 def generate_js(request, filename, project_name=None):
     """ 
     Returns a javascript file generated using django's templating mechanism
@@ -136,9 +138,9 @@ def generate_js(request, filename, project_name=None):
         path = reverse('post', kwargs={'project_name':project.name})
     context = RequestContext(request)
     host = request.META.get('HTTP_HOST')
-    return HttpResponse(render_to_response(filename,
-                                           {'project':project,
-                                            'host' : host,
-                                            'submit_url': path},
-                                           context_instance=context),
+    context['project'] = project
+    context['host'] = host
+    context['submit_url'] = path
+    context['csrf_token_name'] =settings.CSRF_COOKIE_NAME
+    return HttpResponse(render_to_response(filename, context_instance=context),
                         mimetype = 'application/javascript')

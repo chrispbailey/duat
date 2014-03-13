@@ -5,26 +5,30 @@ from django.conf import settings
 
 from duat.models import Feedback, Project
 
+
 class FeedbackModelForm( forms.ModelForm ):
     comment = forms.CharField( widget=forms.Textarea )
-    
+
     class Meta:
         model = Feedback
+
 
 class FeedbackAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,               {'fields': ['project','comment','screenshot']}),
         ('Details', {'fields': ['page','referrer','user_agent','created_date']}),
     ]
-    
+
     readonly_fields = ('created_date','screenshot','page','referrer','user_agent')
     admin_readonly_fields = ('created_date','project','screenshot','page','referrer','user_agent')
     list_display = ('id_render', 'project', 'comment', 'created_date', 'screenshot')
-    list_filter = ('project','created_date') # filters for superuser
-    admin_list_filter = ('created_date',) # filters visible to project admin only
+    _superuser_filter = ('project','created_date') # filters for superuser
+    _admin_list_filter = ('created_date',) # filters visible to project admin only
+    list_filter = _superuser_filter
     search_fields = ['comment']
     list_per_page = 5
     form = FeedbackModelForm
+    
     
     def id_render(self, obj):
         """
@@ -33,7 +37,7 @@ class FeedbackAdmin(admin.ModelAdmin):
         url = reverse('admin:%s_%s_change' %(obj._meta.app_label,  obj._meta.module_name),  args=[obj.id] )
         return ('<a href="%s">Feedback #%s</a>' % (url, obj.id))
     id_render.allow_tags = True
-   
+
     def screenshot(self, obj):
         """
         Renders a clickable screenshot with links to the full image or html view
@@ -82,8 +86,8 @@ class FeedbackAdmin(admin.ModelAdmin):
         # Now we just add an extra filter on the queryset and
         # we're done.
         return qs.filter(project__admin=request.user)
-    
-    _superuser_filter = list_filter # copy list filter
+
+
     def changelist_view(self, request, extra_context=None):
         """
         Change filter options based on user type
@@ -91,18 +95,19 @@ class FeedbackAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             self.list_filter = self._superuser_filter
         else:
-            self.list_filter = self.admin_list_filter
+            self.list_filter = self._admin_list_filter
         return super(FeedbackAdmin, self).changelist_view(request, extra_context)
-    
+
+
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ('project_name','admin')
     readonly_fields = ('jslink',)
-    
+
     host = None
-    
+
     def project_name(self, project):
         return project.name
-    
+
     def jslink(self, project):
         """
         Provide a link to the embeddable javascript file
@@ -110,7 +115,7 @@ class ProjectAdmin(admin.ModelAdmin):
         url = reverse('js',kwargs={'project_name':project.name})
         return '<script src="%s%s"></script>' % (ProjectAdmin.host, url)
     jslink.short_description = 'Embed link'
-    
+
     def get_readonly_fields(self, request, obj=None):
         if not ProjectAdmin.host:
             # set the class-level host here was we have a request object
