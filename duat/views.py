@@ -6,7 +6,7 @@ import logging
 
 from subprocess import call
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseServerError
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
@@ -108,7 +108,7 @@ def generate_screenshot(feedback):
         logger.warn('PHANTOMJS_EXECUTABLE not set - skipping screenshot generation')
         return
     
-    output_dir = os.path.join(settings.STATIC_ROOT, 'screenshots')
+    output_dir = os.path.join(settings.STATIC_ROOT, 'duat', 'screenshots')
     output_file = "%s/%s.jpg" % (output_dir, feedback.id) 
 
     # create a temp file to write our HTML to
@@ -139,6 +139,6 @@ def generate_js(request, filename, project_name=None):
     return HttpResponse(render_to_response(filename,
                                            {'project':project,
                                             'host' : host,
-                                            'path': path},
+                                            'submit_url': path},
                                            context_instance=context),
                         mimetype = 'application/javascript')

@@ -42,7 +42,7 @@ class FeedbackAdmin(admin.ModelAdmin):
 
         PHANTOMJS_EXECUTABLE = getattr(settings, 'PHANTOMJS_EXECUTABLE', '')
         if PHANTOMJS_EXECUTABLE:
-            url_image = settings.STATIC_URL + 'screenshots/' + str(obj.id) + '.jpg'
+            url_image = settings.STATIC_URL + 'duat/screenshots/' + str(obj.id) + '.jpg'
             return ('<a href="%s" style="height:200px;width:200px;'
                     'background-image:url(%s);'
                     'background-repeat:no-repeat;'
