@@ -25,7 +25,7 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         "Topic :: Software Development :: Libraries :: Python Modules",
-        'Topic :: Software Development :: Testing'
+        'Topic :: Software Development :: Testing',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
 )
