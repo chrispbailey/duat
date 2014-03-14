@@ -45,8 +45,8 @@ class FeedbackAdmin(admin.ModelAdmin):
         page_url = reverse('duat-view',kwargs={'project_name':obj.project.name,'id':obj.id})
 
         PHANTOMJS_EXECUTABLE = getattr(settings, 'PHANTOMJS_EXECUTABLE', '')
-        if PHANTOMJS_EXECUTABLE:
-            url_image = settings.STATIC_URL + 'duat/screenshots/' + str(obj.id) + '.jpg'
+        if PHANTOMJS_EXECUTABLE and obj.image:
+            url_image = obj.image.url
             return ('<a href="%s" style="height:200px;width:200px;'
                     'background-image:url(%s);'
                     'background-repeat:no-repeat;'

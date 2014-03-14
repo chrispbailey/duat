@@ -35,7 +35,7 @@ class Feedback(models.Model):
     user_agent = models.CharField(max_length=2000)
     comment = models.CharField(max_length=2000, null=True)
     html = models.TextField(null=True)
-    image = models.TextField(null=True)
+    image = models.ImageField(upload_to='duat_feedback', null=True)
     created_date = models.DateTimeField(auto_now = True)
     
     def __unicode__(self):
@@ -50,9 +50,7 @@ class Feedback(models.Model):
 @receiver(pre_delete, sender=Feedback)
 def _feedback_delete(sender, instance, **kwargs):
     """ Delete auto-generated screenshot when model instance is deleted """
-    screenshot = "%s/%s.jpg" % (os.path.join(settings.STATIC_ROOT, 'screenshots'),
-                                 instance.id)
     try:
-        os.remove(screenshot)
+        os.remove(instance.image.path)
     except OSError:
         pass

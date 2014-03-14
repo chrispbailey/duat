@@ -59,6 +59,10 @@ def post(request, project_name):
                             referrer = referrer,
                             page = page)
         feedback.save()
+        
+        # Create the destination for our screenshot
+        feedback.image = "duat_feedback/%s/%s.jpg" % (project, feedback.id)
+        feedback.save()
 
         logger.info('Saved issue %s' % feedback.id)
 
@@ -109,8 +113,8 @@ def generate_screenshot(feedback):
         logger.warn('PHANTOMJS_EXECUTABLE not set - skipping screenshot generation')
         return
 
-    output_dir = os.path.join(settings.STATIC_ROOT, 'duat', 'screenshots')
-    output_file = "%s/%s.jpg" % (output_dir, feedback.id) 
+    output_file = feedback.image.path
+    logger.debug("Uploading screenshot to %s" % output_file)
 
     # create a temp file to write our HTML to
     input_file = tempfile.NamedTemporaryFile(delete=True)
