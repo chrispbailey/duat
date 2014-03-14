@@ -173,9 +173,4 @@ LOGGING = {
 
 PHANTOMJS_EXECUTABLE=''
 
-import socket
-
-try:
-    HOSTNAME = socket.getfqdn()
-except:
-    HOSTNAME = 'localhost'
+DEFAULT_FROM_EMAIL='webmaster@localhost'

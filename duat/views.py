@@ -78,11 +78,11 @@ def post(request, project_name):
                                          url)
                 send_mail('DUAT: feedback received',
                           'You can view this item here:\n%s' % url, 
-                          'web-master@%s ' % settings.HOSTNAME, 
+                          settings.DEFAULT_FROM_EMAIL, 
                           [project.admin.email],
                           fail_silently=False)
-            except:
-                logger.warn("Unable to notify admin")
+            except Exception as e:
+                logger.warn("Unable to notify admin: %s" % e)
 
         return HttpResponse("Thanks")
     else:
