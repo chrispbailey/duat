@@ -30,9 +30,13 @@ urlpatterns = patterns('',
         kwargs={'filename':'duat/admin.js',
                 'project_name':None}),
 
-    url(r'^project/(?P<project_name>[\w-]+)/submit$', post, name='duat-post'),
+    url(r'^project/(?P<project_name>[\w-]+)/submit$',
+        post, 
+        name='duat-post'),
     
-    url(r'^view/(?P<project_name>[\w-]+)/(?P<id>\d+)/$', cache_page(DEFAULT_CACHE)(view)),
+    url(r'^view/(?P<project_name>[\w-]+)/(?P<id>\d+)/$',
+        cache_page(DEFAULT_CACHE)(view),
+        name='duat-view'),
 
     url(r'^admin/', include(admin.site.urls)),
 )

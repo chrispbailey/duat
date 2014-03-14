@@ -42,7 +42,7 @@ class FeedbackAdmin(admin.ModelAdmin):
         """
         Renders a clickable screenshot with links to the full image or html view
         """
-        page_url = reverse('view',kwargs={'project_name':obj.project.name,'id':obj.id})
+        page_url = reverse('duat-view',kwargs={'project_name':obj.project.name,'id':obj.id})
 
         PHANTOMJS_EXECUTABLE = getattr(settings, 'PHANTOMJS_EXECUTABLE', '')
         if PHANTOMJS_EXECUTABLE:
