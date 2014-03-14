@@ -4,4 +4,4 @@ MANIFEST
 *.pyc
 local_settings.py
 dist
-duat.egg-info
+*.egg-info
