@@ -6,7 +6,7 @@
 
     window.Feedback.init = function(){
         // load css
-        var filename = '//{{host}}{{STATIC_URL}}duat/css/feedback.css';
+        var filename = '{{STATIC_URL}}duat/css/feedback.css';
         var fileref = document.createElement("link");
         fileref.setAttribute("rel", "stylesheet");
         fileref.setAttribute("type", "text/css");
@@ -17,7 +17,7 @@
         "<button class='feedback-btn feedback_start' onclick='window.Feedback.show_form()'>Send Feedback</button>"+
         "<div class='feedback_extra' style='display:none;'>"+
             "<div class='feedback_top'>"+
-                "<div class='feedback_sending'><p>Sending...</p><img src='//{{host}}{{STATIC_URL}}duat/images/ajax-loader.gif'/></div>"+
+                "<div class='feedback_sending'><p>Sending...</p><img src='{{STATIC_URL}}duat/images/ajax-loader.gif'/></div>"+
                 "<div class='feedback_success'><p>Submission sent successfully!</p></div>"+
                 "<div class='feedback_failure'><p>Submission failed!</p></div>"+
                 "<div class='feedback_form'>"+
