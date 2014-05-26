@@ -1,15 +1,18 @@
 from django.conf.urls import patterns, include, url
+from django.conf import settings
 from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import Group
 from django.contrib import admin
-
 from duat.views import post,view,generate_js
 
 admin.autodiscover()
-admin.site.unregister(Site)
-admin.site.unregister(Group)
+if "duat" in settings.INSTALLED_APPS and len(settings.INSTALLED_APPS) == 8:
+    # If we are running in standalone mode, disable the following as they're
+    # not needed
+    admin.site.unregister(Site)
+    admin.site.unregister(Group)
 
 # 1 day cache
 DEFAULT_CACHE = 60 * 60 * 24
