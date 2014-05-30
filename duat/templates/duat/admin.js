@@ -4,7 +4,7 @@
     
     window.FeedbackAdmin.init = function(){
         // load css
-        var filename = '{{STATIC_URL}}css/admin.css';
+        var filename = '{{STATIC_URL}}duat/css/admin.css';
         var fileref = document.createElement("link");
         fileref.setAttribute("rel", "stylesheet");
         fileref.setAttribute("type", "text/css");
