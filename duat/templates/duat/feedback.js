@@ -159,7 +159,7 @@
         if (csrf_token) {
             xhr.setRequestHeader("X-CSRFToken", csrf_token);
         }
-        xhr.send( "data=" + encodeURIComponent( window.JSON.stringify( data ) ) );
+        xhr.send( "duat-data=" + encodeURIComponent( window.JSON.stringify( data ) ) );
         
     };
     

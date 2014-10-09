@@ -110,7 +110,7 @@ Inspiration for this system originally came from `feedback.js`_ but I
 found the canvas tainting in chrome to be a blocker for our requirements
 so I decided to implement a simpler system. 
 
-Tested with Django 1.4, 1.5 & 1.6
+Tested with Django 1.4, 1.5, 1.6 & 1.7
 
 .. _PhantomJS: http://phantomjs.org/
 .. _feedback.js: http://experiments.hertzen.com/jsfeedback/

@@ -26,7 +26,7 @@ def post(request, project_name):
     project = Project.objects.get(name=project_name)
 
     comment = page = referrer = None
-    data = request.POST.get('data',None)
+    data = request.POST.get('duat-data',None)
 
     if data:
         j = json.loads(data.encode("utf-8"))
@@ -147,4 +147,4 @@ def generate_js(request, filename, project_name=None):
     context['submit_url'] = path
     context['csrf_token_name'] =settings.CSRF_COOKIE_NAME
     return HttpResponse(render_to_response(filename, context_instance=context),
-                        mimetype = 'application/javascript')
+                        content_type = 'application/javascript')
