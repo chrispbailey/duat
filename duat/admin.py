@@ -8,9 +8,10 @@ from duat.models import Feedback, Project
 
 class FeedbackModelForm( forms.ModelForm ):
     comment = forms.CharField( widget=forms.Textarea )
-
+    
     class Meta:
         model = Feedback
+        fields = "__all__" 
 
 
 class FeedbackAdmin(admin.ModelAdmin):
