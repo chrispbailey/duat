@@ -5,3 +5,4 @@ MANIFEST
 local_settings.py
 dist
 *.egg-info
+build

@@ -8,7 +8,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-duat',
-    version='0.9',
+    version='1.0',
     packages=['duat'],
     include_package_data=True,
     license='MIT License',
